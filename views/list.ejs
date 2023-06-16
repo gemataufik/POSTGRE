@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BREAD (Browse,Read,Edit,Add,Delete)</title>
     <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
-
+    <script src="https://kit.fontawesome.com/6ea2cb925f.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -99,64 +99,84 @@
     <br>
     <div class="container">
         <table class="table table-striped" id="data">
-            <tr>
-                <th>ID</th>
-                <th>string</th>
-                <th>integer</th>
-                <th>float</th>
-                <th>date</th>
-                <th>boolean</th>
-                <th>Actions</th>
-            </tr>
-            <% data.forEach((item, index)=> { %>
-                <tr>
-                    <td>
-                        <%= item.id %>
-                    </td>
-                    <td>
-                        <%= item.string %>
-                    </td>
-                    <td>
-                        <%= item.integer %>
-                    </td>
-                    <td>
-                        <%= item.float %>
-                    </td>
-                    <td>
-                        <%= moment(item.date).format('MM-DD-YYYY') %> 
-                    </td>
-                    <td>
-                        <%= item.boolean %>
-                    </td>
-                    <td><a class="btn btn-primary" href="/ubah/<%= item.id %>">Edit</a> &nbsp;
-                        <a class="btn btn-danger" href="/hapus/<%= item.id %>">Delete</a>
-                    </td>
+            <thead>
+                <tr align="center">
+                    
+                    <th >ID
+                        <i class="fa-solid fa-sort"></i>
+                    </th>
+                
+                    <th>string
+                        <i class="fa-solid fa-sort"></i>
+                    </th>
+
+                    <th>integer
+                        <i class="fa-solid fa-sort"></i>
+                    </th>
+                    <th>float
+                        <i class="fa-solid fa-sort"></i>
+                    </th>
+                    <th>date
+                        <i class="fa-solid fa-sort"></i>
+                    </th>
+                    <th>boolean
+                        <i class="fa-solid fa-sort"></i>
+                    </th>
+                    <th>Actions</th>
                 </tr>
-                <% }) %>
+            </thead>
+
+            <tbody>
+                <% data.forEach((item, index)=> { %>
+                    <tr>
+                        <td>
+                            <%= item.id %>
+                        </td>
+                        <td>
+                            <%= item.string %>
+                        </td>
+                        <td>
+                            <%= item.integer %>
+                        </td>
+                        <td>
+                            <%= item.float %>
+                        </td>
+                        <td>
+                            <%= moment(item.date).format('MM-DD-YYYY') %>
+                        </td>
+                        <td>
+                            <%= item.boolean %>
+                        </td>
+                        <td><a class="btn btn-primary" href="/ubah/<%= item.id %>">Edit</a> &nbsp;
+                            <a class="btn btn-danger" href="/hapus/<%= item.id %>">Delete</a>
+                        </td>
+                    </tr>
+                    <% }) %>
+            </tbody>
         </table>
     </div>
 
     <br>
     <div class="container">
-    <nav aria-label="Page navigation example">
-        <ul class="pagination">
-            <% if (page> 1) { %>
-                <li class="page-item"><a class="page-link"
-                        href="<%= url.replace(`page=${page}`, `page=${page-1}`) %>">Previous</a></li>
-                <% } %>
-                    <% for(let i=1; i <=pages; i++){ %>
-                        <li class="page-item"><a class="page-link <%= page == i ? 'active' : '' %>"
-                                href="<%= url.replace(`page=${page}`, `page=${i}`) %>">
-                                <%= i %>
-                            </a></li>
-                        <% } %>
-                            <% if (page < pages) { %>
-                                <li class="page-item"><a class="page-link"
-                                        href="<%= url.replace(`page=${parseInt(page)}`, `page=${parseInt(page)+1}`) %>">Next</a>
-                                </li>
-                                <% } %>
-        </ul>
-    </nav>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <% if (page> 1) { %>
+                    <li class="page-item"><a class="page-link"
+                            href="<%= url.replace(`page=${page}`, `page=${page-1}`) %>">Previous</a></li>
+                    <% } %>
+                        <% for(let i=1; i <=pages; i++){ %>
+                            <li class="page-item"><a class="page-link <%= page == i ? 'active' : '' %>"
+                                    href="<%= url.replace(`page=${page}`, `page=${i}`) %>">
+                                    <%= i %>
+                                </a></li>
+                            <% } %>
+                                <% if (page < pages) { %>
+                                    <li class="page-item"><a class="page-link"
+                                            href="<%= url.replace(`page=${parseInt(page)}`, `page=${parseInt(page)+1}`) %>">Next</a>
+                                    </li>
+                                    <% } %>
+            </ul>
+        </nav>
     </div>
 
 

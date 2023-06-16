@@ -21,7 +21,7 @@ module.exports = function (pool) {
 
         if (req.query.string && req.query.checkboxstring) {
             params.push(`%${req.query.string}%`);
-            sqlsearch.push(`string LIKE $${params.length}`)
+            sqlsearch.push(`string ILIKE $${params.length}`)
         }
 
         if (req.query.integer && req.query.checkboxinteger) {
@@ -77,74 +77,66 @@ module.exports = function (pool) {
 
 
     router.get('/add', (req, res) => {
-        res.render('add', { title: 'Add' })
+        res.render('add', { item: {}, moment })
+      })
+    
+      router.post('/add', (req, res) => {
+        const { string, integer, float, date, boolean } = req.body
+        const queryAdd = `INSERT INTO data (string,integer,float,date,boolean) VALUES ($1,$2,$3,$4,$5)`
+        const values = [string, integer, float, date, boolean]
+    
+        pool.query(queryAdd, values, (err) => {
+          if (err) {
+            console.log(err)
+          } else {
+            res.redirect('/')
+          }
+        })    
+      })
+
+
+    router.get('/hapus/:id', (req, res) => {
+        const id = req.params.id
+        const queryHapus = 'DELETE FROM data WHERE id = $1'
+        const values = [id]
+        pool.query(queryHapus, values, function (err) {
+          if (err) {
+            console.log(err)
+          } else {
+            res.redirect('/')
+          }
+        })
+      })
+    
+
+    router.get('/ubah/:id', (req, res) => {
+        const id = req.params.id
+        const queryEdit = 'SELECT * FROM data WHERE id = $1'
+        const values = [id]
+        pool.query(queryEdit, values, (err, item) => {
+          if (err) {
+            console.error(err)
+          } else {
+            res.render('edit', { item: item.rows[0], moment })
+          }
+        })
+      })
+
+
+  router.post('/ubah/:id', (req, res) => {
+    const id = req.params.id
+    const { string, integer, float, date, boolean } = req.body
+    const query = 'UPDATE data SET string = $1, integer = $2, float = $3, date = $4, boolean = $5 WHERE id = $6 ';
+    const values = [string, integer, float, date, boolean, id];
+
+    pool.query(query, values, function (err) {
+      if (err) {
+        console.log(err);
+      } else {
+        res.redirect('/')
+      }
     })
-
-
-
-    // router.post('/add', (req, res) => {
-    //     const string = req.body.string
-    //     const integer = req.body.integer
-    //     const float = req.body.float
-    //     const date = req.body.date
-    //     const boolean = req.body.boolean
-
-    //     const query = `INSERT INTO data (string, integer, float, date, boolean) VALUES ('${string}', ${integer}, ${float}, '${date}', ${boolean})`
-
-    //     pool.query(query, (err) => {
-    //         if (err) {
-    //             console.log(err);
-    //         } else {
-    //             res.redirect('/')
-    //         }
-    //     })
-    // })
-
-
-    // router.get('/hapus/:id', (req, res) => {
-    //     const query = 'DELETE FROM data WHERE id = ?'
-    //     const id = req.params.id
-    //     const values = [id]
-
-    //     pool.query(query, values, (err) => {
-    //         if (err) {
-    //             console.error(err);
-    //         } else {
-    //             res.redirect('/')
-    //         }
-    //     })
-    // })
-
-
-    // router.get('/ubah/:id', (req, res) => {
-    //     const query = 'SELECT * FROM data WHERE id = ?'
-    //     const id = req.params.id
-    //     const values = [id]
-
-    //     pool.query(query, values, (err, row) => {
-    //         if (err) {
-    //             console.log(err);
-    //         } else {
-    //             res.render('edit', { item: row })
-    //         }
-    //     })
-    // })
-
-    // router.post('/ubah/:id', (req, res) => {
-    //     const id = req.params.id
-    //     const { string, integer, float, date, boolean } = req.body
-
-    //     const query = 'UPdate data SET string = ?, integer = ?, float = ?, date = ?, boolean = ? WHERE id = ?'
-    //     const values = [string, integer, float, date, boolean, id]
-
-    //     pool.query(query, values, (err) => {
-    //         if (err) {
-    //             console.log(err);
-    //         } else {
-    //             res.redirect('/')
-    //         }
-    //     })
-    // })
+  })
 
     return router;
 }
