@@ -8,17 +8,18 @@ const  { Pool } = require ('pg')
 const pool = new Pool({
   user: 'gema',
   host: 'localhost',
-  database: 'datadb',
+  database: 'server',
   password: '12345',
   port: 5432,
 })
 
-pool.query('select * from data', (err,data)=>{
-  // console.log(err,rows)
-})
+// pool.query('select * from data', (err,data)=>{
+//   // console.log(err,rows)
+// })
 
 var indexRouter = require('./routes/index')(pool);
 var usersRouter = require('./routes/users');
+
 
 var app = express();
 

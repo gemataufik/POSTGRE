@@ -55,10 +55,15 @@ module.exports = function (pool) {
             const offset = (page - 1) * limit
             const pages = Math.ceil(data.rows[0].count / limit)
 
+            const sort = req.query.sort || 'id' 
+            const order = req.query.order || 'asc'
+
             sql = 'SELECT * FROM data'
             if (params.length > 0) {
                 sql += ` WHERE ${sqlsearch.join(' AND ')}`
             }
+
+            sql += ` ORDER BY ${sort} ${order}`
 
             params.push(limit, offset)
             sql += ` LIMIT $${params.length - 1} OFFSET $${params.length}`
@@ -69,7 +74,7 @@ module.exports = function (pool) {
                     console.log(err)
                     return res.status(500).send('Internal Server Error')
                 } else {
-                    res.render('list', { data: data.rows, pages, page,moment, offset, query: req.query, url })
+                    res.render('list', { data: data.rows, pages, page,moment, offset, query: req.query, url, moment, sort: sort, order: order })
                 }
             })
         })

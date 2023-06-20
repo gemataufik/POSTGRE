@@ -16,7 +16,7 @@
                 <h1>Edit Data</h1>
             <br>
             <div class="row mb-3">
-                <label class="col-sm-2 col-form-label" for="id">id</label>
+                <label class="col-sm-2 col-form-label" for="id">ID</label>
                 <div class="col-sm-10">
                     <input class="form-control" type="text" value="<%= item.id %>" id="id" name="id" readonly
                         style="background-color: #ccc;" required="">
@@ -24,21 +24,21 @@
             </div>
 
             <div class="row mb-3">
-                <label for="string" class="col-sm-2 col-form-label">string</label>
+                <label for="string" class="col-sm-2 col-form-label">String</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" value="<%= item.string %>" id="string" name="string" required="">
                 </div>
             </div>
 
             <div class="row mb-3">
-                <label class="col-sm-2 col-form-label" for="integer">integer</label>
+                <label class="col-sm-2 col-form-label" for="integer">Integer</label>
                 <div class="col-sm-10">
                     <input class="form-control" type="number" value="<%= item.integer %>" id="integer" name="integer" required="">
                 </div>
             </div>
 
             <div class="row mb-3">
-                <label class="col-sm-2 col-form-label" for="float">float</label>
+                <label class="col-sm-2 col-form-label" for="float">Float</label>
                 <div class="col-sm-10">
                     <input class="form-control" type="number" value="<%= item.float %>" id="float" step="any"
                         name="float" required="">
@@ -46,7 +46,7 @@
             </div>
 
             <div class="row mb-3">
-                <label class="col-sm-2 col-form-label" for="date">date</label>
+                <label class="col-sm-2 col-form-label" for="date">Date</label>
                 <div class="col-sm-10">
                     <input class="form-control" type="date" value="<%= moment(item.date).format('MM-DD-YYYY') %> "
                         id="date" name="date" required="">
@@ -54,7 +54,7 @@
             </div>
 
             <div class="row mb-3">
-                <label class="col-sm-2 col-form-label" for="boolean">boolean</label>
+                <label class="col-sm-2 col-form-label" for="boolean">Boolean</label>
                 <div class="col-sm-10">
                     <select class="form-control" style="background-color: white;" id="boolean" name="boolean">
                         <option value="true" <% if(item.boolean=="true" ){ %>selected<% } %>>True</option>
